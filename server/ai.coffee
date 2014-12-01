@@ -12,15 +12,16 @@ Meteor.startup ->
         items = json.response.docs
         for item in items
           id = item.csid_s
-          console.log id
           if item.blob_ss
             for blob in item.blob_ss
-              console.log blob
               link = 'https://dev.cspace.berkeley.edu/pahmav2_project/imageserver/blobs/' + blob + '/content'
-              console.log link
-              postLink = 'http://s3.us.archive.org/hearst-anthro-musem' + blob + '.jpg'
+              postLink = 'http://s3.us.archive.org/test_collection/' + blob + '.jpg'
               Meteor.http.get link,
                 (e,r) ->
-                  Meteor.http.post postLink,
+                  Meteor.http.put postLink, r,
+                    headers:
+                      authorization: #accesskeys here,
                     (e,r) ->
-                      console.log r
+                      console.log postLink
+                      console.log r 
+ 
